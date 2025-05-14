@@ -1,0 +1,145 @@
+/* General Styles */
+body {
+    background-color: #f8f9fa;
+}
+
+/* Card Styles */
+.card {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+}
+
+/* Table Styles */
+.table-responsive {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.table th {
+    background-color: #f8f9fa;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+/* Interactive Elements */
+.ip-address, .port-number {
+    cursor: pointer;
+    color: #0d6efd;
+    text-decoration: underline;
+}
+
+.ip-address:hover, .port-number:hover {
+    color: #0a58ca;
+}
+
+/* Modal Styles */
+.modal-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.modal-footer {
+    background-color: #f8f9fa;
+    border-top: 1px solid #dee2e6;
+}
+
+/* Form Controls */
+.form-select, .form-control {
+    border-radius: 0.25rem;
+}
+
+/* Statistics Cards */
+.card h2 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 0;
+    color: #0d6efd;
+}
+
+.card-title {
+    color: #6c757d;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+/* Chart Container */
+#sizeDistributionChart {
+    height: 300px;
+}
+
+/* Navbar */
+.navbar {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Timezone Select */
+#timezoneSelect {
+    max-width: 200px;
+}
+
+/* Refresh Button */
+#refreshButton {
+    transition: transform 0.2s;
+}
+
+#refreshButton:hover {
+    transform: rotate(180deg);
+}
+
+/* Filter Section */
+.filters .form-select,
+.filters .form-control {
+    margin-bottom: 0.5rem;
+}
+
+/* Table Cell Formatting */
+.table td {
+    vertical-align: middle;
+}
+
+.bytes-cell {
+    font-family: monospace;
+    text-align: right;
+}
+
+.duration-cell {
+    font-family: monospace;
+    white-space: nowrap;
+}
+
+/* Status Indicators */
+.status-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.status-active {
+    background-color: #28a745;
+}
+
+.status-inactive {
+    background-color: #dc3545;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .card h2 {
+        font-size: 1.5rem;
+    }
+    
+    .table-responsive {
+        max-height: 300px;
+    }
+    
+    #timezoneSelect {
+        max-width: 150px;
+    }
+} 
