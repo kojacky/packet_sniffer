@@ -1,0 +1,80 @@
+version: '3.8'
+
+networks:
+  packet_net:
+    driver: bridge
+
+services:
+  redis:
+    image: redis:6-alpine
+    container_name: packet_sniffer_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 3
+
+  postgres:
+    image: postgres:14-alpine
+    container_name: packet_sniffer_postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres123
+      - POSTGRES_DB=postgres
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: packet_sniffer_pgadmin
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=kojacky@gmail.com
+      - PGADMIN_DEFAULT_PASSWORD=pgadmin_password
+      - PGADMIN_LISTEN_PORT=5050
+    ports:
+      - "5050:5050"
+    depends_on:
+      - postgres
+
+  packet_sniffer:
+    build: .
+    container_name: packet_sniffer
+    network_mode: "host"  # Required for packet capture
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    volumes:
+      - ./data:/app/data
+    depends_on:
+      redis:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    environment:
+      - REDIS_HOST=localhost
+      - REDIS_PORT=6379
+      - POSTGRES_HOST=localhost
+      - POSTGRES_PORT=5433
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres123
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  redis_data:
+  postgres_data:
